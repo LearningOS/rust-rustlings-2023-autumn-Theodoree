@@ -3,6 +3,8 @@ use std::process::Command;
 use crate::exercise::{Exercise, Mode};
 use crate::verify::test;
 use indicatif::ProgressBar;
+use regex::Replacer;
+use toml::Value::String;
 
 // Invoke the rust compiler on the path of the given exercise,
 // and run the ensuing binary.
@@ -15,6 +17,7 @@ pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
         Mode::Clippy => compile_and_run(exercise)?,
         Mode::BuildScript => test(exercise, verbose)?,
     }
+    let mut output: Vec<&str> = vec![];
     Ok(())
 }
 
